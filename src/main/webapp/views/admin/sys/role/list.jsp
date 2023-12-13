@@ -35,7 +35,7 @@
         <button type="button" class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">
             <i class="layui-icon layui-icon-edit" title="编辑角色">编辑</i>
         </button>
-        <button type="button" class="layui-btn layui-btn-xs" lay-event="permiss">
+        <button type="button" class="layui-btn layui-btn-xs" lay-event="power">
             <i class="layui-icon layui-icon-edit" title="设置权限">权限</i>
         </button>
     </script>
@@ -72,7 +72,7 @@ layui.extend({
     // 工具条点击事件
     table.on('toolbar', function (obj) {
         if (obj.event === 'add') {
-            editView("${ctx}/role/add", "新增角色");
+            editView("${ctx}/admin/role/edit", "新增角色");
         } else if (obj.event === 'del') {
             layer.confirm('真的删除行么?', function (index) {
                 let selectData = table.checkStatus('table-list').data;
@@ -82,7 +82,7 @@ layui.extend({
                         idsArray.push(selectData[i].roleId);
                     }
                     let ids = idsArray.toString();
-                    changeReq(ids, '/role/del')
+                    changeReq(ids, '${ctx}/admin/role/del')
                     layer.close(index);
                 }
             });
@@ -93,9 +93,9 @@ layui.extend({
     table.on('tool', function (obj) {
         let data = obj.data, event = obj.event;
         if (event === 'edit') {
-            editView("${ctx}/role/update?id=" + data.roleId, "编辑角色");
-        } else if (event === 'permiss') {
-            editView("/role/setAssign?id=" + data.roleId, "角色权限");
+            editView("${ctx}/admin/role/edit?id=" + data.id, "编辑角色");
+        } else if (event === 'power') {
+            editView("${ctx}/admin/role/power?id=" + data.id, "角色权限");
         }
     });
 

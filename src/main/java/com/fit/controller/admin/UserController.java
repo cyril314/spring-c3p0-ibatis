@@ -3,9 +3,12 @@ package com.fit.controller.admin;
 import com.common.base.BaseController;
 import com.common.bean.AjaxResult;
 import com.common.utils.BeanUtils;
+import com.common.utils.ConverterUtils;
 import com.common.utils.MD5Util;
 import com.common.utils.ObjectUtil;
+import com.fit.bean.SysDept;
 import com.fit.bean.SysUser;
+import com.fit.service.SysDeptService;
 import com.fit.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +31,8 @@ public class UserController extends BaseController {
 
     @Autowired
     private SysUserService userService;
+    @Autowired
+    private SysDeptService deptService;
 
     @GetMapping("/list")
     public String userList(Model model) {
@@ -47,13 +52,17 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/edit")
-    public String userEdit(Model model) {
+    public String edit(Long id, Model model) {
+        if (ObjectUtil.isNotEmpty(id)) {
+            SysUser user = userService.get(id);
+            model.addAttribute("user", user);
+        }
         return "admin/sys/user/edit";
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/save")
     @ResponseBody
-    public void userEdit(HttpServletRequest request, HttpServletResponse response) {
+    public void save(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> map = getRequestParamsMap(request);
         try {
             SysUser sysUser = BeanUtils.map2Bean(SysUser.class, map);
@@ -79,6 +88,18 @@ public class UserController extends BaseController {
         } else {
             writeToJson(response, AjaxResult.error("删除失败"));
         }
+    }
+
+    /**
+     * 详情页面
+     */
+    @RequestMapping("/detail")
+    public String detail(Long id, Model model) {
+        if (ObjectUtil.isNotEmpty(id)) {
+            SysUser sysUser = userService.get(id);
+            model.addAttribute("user", sysUser);
+        }
+        return "admin/sys/user/info";
     }
 
     /**

@@ -9,15 +9,13 @@ import lombok.NoArgsConstructor;
 /**
  * @AUTO
  * @Author Fit
- * @DATE 2023/12/10
+ * @DATE 2023/12/13
  */
 @Data
 @Builder
 @NoArgsConstructor //无参数的构造方法
 @AllArgsConstructor //包含所有变量构造方法
 public class SysMenu extends BaseEntity<SysMenu> {
-    private static final long serialVersionUID = 1L;
-
     /** 主键 (主健ID) (无默认值) */
     private Long id;
 

@@ -45,9 +45,9 @@ public class IndexAdminController extends BaseController {
     /**
      * 获取部门树列表
      */
-    @RequestMapping(value = "/admin/menu/tree")
+    @RequestMapping(value = "/admin/dept/tree")
     @ResponseBody
-    public Object tree() {
+    public Object treeDept() {
         List<ZTreeNode> tree = this.ztreeNodeService.deptZtree();
         tree.add(ZTreeNode.createParent());
         return AjaxResult.success(200, "获取部门成功", tree);
@@ -59,7 +59,7 @@ public class IndexAdminController extends BaseController {
         if (user == null) {
             return "redirect:/login?error=true";
         } else {
-            List<Long> userRoles = menuService.getUserRoles(user.getUsername());
+            List<Long> userRoles = menuService.getUserRoles(user.getId());
             List<MenuNode> menus = menuService.getUserMenuNodes(userRoles);
             model.addAttribute("menus", menus);
             model.addAttribute("os", SystemUtil.getOsInfo());

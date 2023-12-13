@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <html>
 <jsp:include page="../../../head.jsp">
@@ -7,30 +9,33 @@
 <body style="background-color:#fff">
 <div class="yadmin-body animated fadeIn">
     <div class="layui-form layui-form-pane">
-        <input type="hidden" name="roleId" th:value="${role?.roleId}" />
-        <div class="layui-form-item" th:if="${role?.pid}==0 ? false : true">
+        <input type="hidden" name="id" value="${role.id}" />
+        <c:if test="${role.pid==0}">
+        <div class="layui-form-item">
             <label for="roleTree" class="layui-form-label"><span class="yadmin-red">*</span>上级名称</label>
             <div class="layui-input-block">
                 <ul id="roleTree" class="dtree" data-id="0" data-value="选择上级名称"></ul>
-                <input type="hidden" id="pid" name="pid" th:value="${role?.pid}">
+                <input type="hidden" id="pid" name="pid" value="${role.pid}">
             </div>
         </div>
+        </c:if>
         <div class="layui-form-item">
             <label for="name" class="layui-form-label"><span class="yadmin-red">*</span>角色名称</label>
             <div class="layui-input-block">
-                <input type="text" id="name" placeholder="请输入名称" name="name" th:value="${role?.name}" lay-verify="required" lay-vertype="tips" autocomplete="off" class="layui-input" />
+                <input type="text" id="name" placeholder="请输入名称" name="name" value="${role.name}" lay-verify="required" lay-vertype="tips" autocomplete="off" class="layui-input" />
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="description" class="layui-form-label">备注</label>
+            <label for="notes" class="layui-form-label">备注</label>
             <div class="layui-input-block">
-                <input type="text" id="description" placeholder="请输入备注" name="description" th:value="${role?.description}" lay-vertype="tips" autocomplete="off" class="layui-input" />
+                <input type="text" id="notes" placeholder="请输入备注" name="description" value="${role.notes}" lay-vertype="tips" autocomplete="off" class="layui-input" />
             </div>
         </div>
-        <div class="layui-form-item">
-            <label for="sort" class="layui-form-label">序号</label>
+        <div class="layui-form-item" pane="">
+            <label class="layui-form-label">状态</label>
             <div class="layui-input-block">
-                <input type="text" id="sort" placeholder="请输入序号" name="sort" th:value="${role?.sort}" lay-vertype="tips" autocomplete="off" class="layui-input">
+                <input type="radio" id="ENABLED" name="1" value="ENABLE" title="正常" />
+                <input type="radio" name="ENABLED" value="0" title="冻结" checked />
             </div>
         </div>
         <div class="layui-form-item">
@@ -43,9 +48,8 @@
 <script>
 layui.extend({
     dtree: 'layui/extend/dtree/dtree'
-}).use(['form', 'layer', 'dtree'], function () {
-    var form = layui.form, layer = layui.layer, $ = layui.$, dtree = layui.dtree;
-    if ("[[${role?.pid}]]" != "0") {
+}).use(['form', 'dtree'], function (form, dtree) {
+    if ("${role.pid}" != "0") {
         dtree.on("node('roleTree')", function (obj) {
             let typeDom = layui.$('#pid');
             if (typeDom.val() === obj.param.nodeId) {
@@ -58,7 +62,7 @@ layui.extend({
         
         dtree.renderSelect({
             elem: "#roleTree",
-            url: "/role/tree",
+            url: "${ctx}/admin/role/tree",
             dataStyle: "layuiStyle",
             selectInitVal: 1,
             width: "100%",
@@ -66,15 +70,12 @@ layui.extend({
             menubar: true,
             dataFormat: "list",
             ficon: ["1", "-1"],
-            response: {
-                statusCode: 0,
-                message: "msg",
-                title: "name"
-            }, done: function (data, obj, first) {
+            done: function (data, obj, first) {
                 if (first) {
-                    dtree.dataInit("roleTree", $('#pid').val());
+                    dtree.dataInit("roleTree", layui.$('#pid').val());
                     dtree.selectVal("roleTree");
                 }
+                layui.$('input:radio[name=status][value="${role.enabled}"]').prop("checked", true);
             }
         });
     }
@@ -82,7 +83,7 @@ layui.extend({
     form.on('submit(submit-form)', function (obj) {
         $.ajax({
             type: "POST",
-            url: '/role/save',
+            url: '${ctx}/admin/role/save',
             data: obj.field,
             dataType: 'json',
             cache: false,

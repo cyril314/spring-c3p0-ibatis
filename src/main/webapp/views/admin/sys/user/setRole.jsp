@@ -7,17 +7,17 @@
 <body style="background-color:#fff">
 <div class="yadmin-body animated fadeIn">
     <div class="layui-form layui-form-pane">
-        <input type="hidden" name="userId" th:value="${userId}" />
-        <div class="layui-form-item" th:if="${role?.pid}==0 ? false : true">
+        <input type="hidden" name="id" value="${userId}" />
+        <div class="layui-form-item" if="${role.pid}==0 ? false : true">
             <label for="roleTree" class="layui-form-label"><span class="yadmin-red">*</span>上级名称</label>
             <div class="layui-input-block">
                 <ul id="roleTree" class="dtree" data-id="0" data-value="选择上级名称"></ul>
-                <input type="hidden" name="roleId" th:value="${roleId}" id="roleId" />
+                <input type="hidden" name="roleId" value="${roleId}" id="roleId" />
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block layui-align">
-                <button class="layui-btn layui-btn-normal btn-w100" lay-submit="" lay-filter="submit-form">保存</button>
+                <button class="layui-btn layui-btn-normal btn-w100" lay-submit lay-filter="submit-form">保存</button>
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@ layui.extend({
     
     dtree.renderSelect({
         elem: "#roleTree",
-        url: "/role/tree",
+        url: "${ctx}/admin/role/tree",
         dataStyle: "layuiStyle",
         selectInitVal: 1,
         width: "100%",
@@ -62,7 +62,7 @@ layui.extend({
     form.on('submit(submit-form)', function (obj) {
         $.ajax({
             type: "POST",
-            url: '/mgr/authRole',
+            url: '${ctx}/admin/mgr/authRole',
             data: obj.field,
             dataType: 'json',
             cache: false,

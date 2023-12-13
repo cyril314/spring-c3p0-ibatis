@@ -32,9 +32,7 @@
     </div>
 </div>
 <script>
-layui.use(['form', 'layer'], function () {
-    let form = layui.form, layer = layui.layer, $ = layui.$;
-    
+layui.use(['form', 'layer'], function (form, $) {
     form.verify({
         repass: function (value) {
             if ($('#confirmPass').val() != $('#newPassword').val()) {
@@ -46,7 +44,7 @@ layui.use(['form', 'layer'], function () {
     form.on('submit(submit-form)', function (obj) {
         $.ajax({
             type: "POST",
-            url: '/mgr/changePwd',
+            url: '${ctx}/admin/user/changePwd',
             data: obj.field,
             dataType: 'json',
             cache: false,

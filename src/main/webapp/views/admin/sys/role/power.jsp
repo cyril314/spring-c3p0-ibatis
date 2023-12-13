@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <html>
 <jsp:include page="../../../head.jsp">
@@ -32,16 +34,14 @@
 <script>
 layui.extend({
     dtree: 'layui/extend/dtree/dtree'
-}).use(['form', 'layer', 'dtree'], function () {
-    var form = layui.form, $ = layui.$, dtree = layui.dtree;
-    
+}).use(['form', 'dtree'], function (form, dtree, $) {
     dtree.render({
         elem: "#menuTree",
-        url: "/menu/tree",
+        url: "${ctx}/admin/menu/tree",
         method: "post",
         checkbar: "true",
         checkbarFun: {
-            chooseDone: function (checkbarNodesParam) { //复选框点击事件完毕后，返回该树关于复选框操作的全部信息。
+            chooseDone: function (nodes) { //复选框点击事件完毕后，返回该树关于复选框操作的全部信息。
                 $('#menus').val(dtree.getCheckedIds("menuTree"));
                 return;
             }
@@ -73,7 +73,7 @@ layui.extend({
         console.log(obj.field)
         $.ajax({
             type: "POST",
-            url: '/role/saveAssign',
+            url: '${ctx}/admin/role/savePower',
             data: obj.field,
             dataType: 'json',
             cache: false,

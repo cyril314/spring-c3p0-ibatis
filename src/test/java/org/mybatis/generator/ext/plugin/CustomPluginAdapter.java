@@ -100,7 +100,7 @@ public class CustomPluginAdapter extends PluginAdapter {
             FullyQualifiedJavaType impDate = new FullyQualifiedJavaType("java.util.Date");
             topLevelClass.addImportedType(impDate);
         }
-        makeSerializable(topLevelClass, introspectedTable);
+        //makeSerializable(topLevelClass, introspectedTable);
         topLevelClass.addJavaDocLine("/**\n" +
                 " * @AUTO\n" +
                 " * @Author Fit\n" +

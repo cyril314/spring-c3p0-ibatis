@@ -31,6 +31,16 @@ public class ZtreeNodeService {
     }
 
     /**
+     * 获取角色树节点集合
+     */
+    public List<ZTreeNode> roleZtree() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT id,pid AS parentId,NAME AS title, (CASE WHEN (PID = 0 OR PID IS NULL) THEN 'true' ELSE 'false' END ) AS OPEN ");
+        sb.append(" FROM sys_role");
+        return jdbcTemplate.query(sb.toString(), BeanPropertyRowMapper.newInstance(ZTreeNode.class));
+    }
+
+    /**
      * 获取栏目树节点集合
      */
     public List<ZTreeNode> menuZtree() {

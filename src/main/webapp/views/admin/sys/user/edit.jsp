@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <html>
 <jsp:include page="../../../head.jsp">
@@ -7,18 +10,12 @@
 <body style="background-color:#fff">
 <div class="yadmin-body animated fadeIn">
     <div class="layui-form layui-form-pane">
-        <input type="hidden" name="userId" value="${user.userId}" />
+        <input type="hidden" name="id" value="${user.id}" />
         <div class="layui-form-item">
             <label for="deptTree" class="layui-form-label"><span class="yadmin-red">*</span>部门</label>
             <div class="layui-input-block">
                 <ul id="deptTree" class="dtree" data-id="0" data-value="请选择"></ul>
-                <input type="hidden" id="deptId" name="deptId" value="${user.deptId}">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="account" class="layui-form-label"><span class="yadmin-red">*</span>账号名称</label>
-            <div class="layui-input-block">
-                <input type="text" id="account" placeholder="请输入账号名" name="account" value="${user.account}" lay-verify="required" lay-vertype="tips" autocomplete="off" class="layui-input" />
+                <input type="hidden" id="deptId" name="deptId" value="${user.deptId}"/>
             </div>
         </div>
         <div class="layui-form-item">
@@ -33,44 +30,54 @@
                 <input type="text" id="phone" placeholder="请输入电话号码" name="phone" value="${user.phone}" maxlength="11" lay-verify="required|phone" lay-vertype="tips" autocomplete="off" class="layui-input">
             </div>
         </div>
-        <!-- 编辑时不显示密码框 -->
-        <div class="layui-form-item" if="${user} ? false : true">
-            <label for="password" class="layui-form-label"><span class="yadmin-red">*</span>用户密码</label>
+        <c:if test="${empty user}">
+        <div class="layui-form-item">
+            <label for="account" class="layui-form-label"><span class="yadmin-red">*</span>账号名称</label>
             <div class="layui-input-block">
-                <input type="password" id="password" name="password" lay-verify="required" lay-vertype="tips" autocomplete="off" class="layui-input">
+                <input type="text" id="account" placeholder="请输入账号名" name="account" value="${user.account}" lay-verify="required" lay-vertype="tips" autocomplete="off" class="layui-input" />
             </div>
         </div>
+        <!-- 编辑时不显示密码框 -->
+        <div class="layui-form-item">
+            <label for="password" class="layui-form-label"><span class="yadmin-red">*</span>用户密码</label>
+            <div class="layui-input-block">
+                <input type="password" id="password" name="password" lay-verify="required" lay-vertype="tips" autocomplete="off" class="layui-input" />
+            </div>
+        </div>
+        </c:if>
         <div class="layui-form-item">
             <label for="email" class="layui-form-label"><span class="yadmin-red">*</span>邮箱</label>
             <div class="layui-input-block">
-                <input type="text" id="email" placeholder="请输入用户名" name="email" value="${user.email}" lay-verify="required|email" lay-vertype="tips" autocomplete="off" class="layui-input">
+                <input type="text" id="email" placeholder="请输入邮箱" name="email" value="${user.email}" lay-verify="required|email" lay-vertype="tips" autocomplete="off" class="layui-input" />
             </div>
         </div>
         <div class="layui-form-item">
             <label for="sex" class="layui-form-label">性别</label>
             <div class="layui-input-block">
-                <select id="sex" name="sex" class="layui-input" lay-verify="required" lay-vertype="tips" with="type=${@dict.getType('SEX')}">
-                    <option each="dict : ${type}" text="${dict.name}" value="${dict.code}" selected="${user.sex eq dict.code}"></option>
+                <select id="sex" name="sex" class="layui-input" lay-verify="required" lay-vertype="tips">
+                    <option>请选择</option>
+                    <option value="0" <c:if test="${user.sex eq 0}">selected</c:if> >女</option>
+                    <option value="1" <c:if test="${user.sex eq 1}">selected</c:if> >男</option>
                 </select>
             </div>
         </div>
         <div class="layui-form-item">
             <label for="birthday" class="layui-form-label">出生日期</label>
             <div class="layui-input-block">
-                <input type="text" id="birthday" name="birthday" class="layui-input" value="${#dates.format(user.birthday,'yyyy-MM-dd')}">
-            </div>
-        </div>
-        <div class="layui-form-item" pane="">
-            <label class="layui-form-label">状态</label>
-            <div class="layui-input-block">
-                <input type="radio" id="status" name="status" value="ENABLE" title="正常" />
-                <input type="radio" name="status" value="LOCKED" title="冻结" checked />
+                <input type="text" id="birthday" name="birthday" class="layui-input" value="<fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/>">
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="desc" class="layui-form-label">描述</label>
+            <label class="layui-form-label">状态</label>
             <div class="layui-input-block">
-                <input type="text" id="desc" placeholder="说点什么..." name="desc" value="${user.desc}" autocomplete="off" class="layui-input">
+                <input type="radio" name="enabled" value="1" title="正常" <c:if test="${user.enabled}">checked</c:if> >
+                <input type="radio" name="enabled" value="0" title="冻结" <c:if test="${not user.enabled}">checked</c:if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="notes" class="layui-form-label">描述</label>
+            <div class="layui-input-block">
+                <input type="text" id="notes" placeholder="说点什么..." name="notes" value="${user.notes}" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -81,53 +88,46 @@
     </div>
 </div>
 <script>
-layui.extend({
-    dtree: 'layui/extend/dtree/dtree'
-}).use(['form', 'layer', 'dtree', 'laydate'], function () {
-    var form = layui.form, dtree = layui.dtree, laydate = layui.laydate, $ = layui.$;
-    
+layui.use(['jquery', 'form', 'dtree', 'laydate'], function ($, form, dtree, laydate) {
     laydate.render({
         elem: '#birthday', type: 'date', format: 'yyyy-MM-dd'
     });
-    
+
     dtree.on("node('deptTree')", function (obj) {
-        let typeDom = layui.$('#deptId');
+        let typeDom = $('#deptId');
         if (typeDom.val() === obj.param.nodeId) {
             typeDom.val('');
-            layui.$("input[dtree-id='deptTree']").val('请选择');
+            $("input[dtree-id='deptTree']").val('请选择');
         } else {
             typeDom.val(obj.param.nodeId)
         }
     });
-    
-    dtree.renderSelect({
+
+    var depTree = dtree.renderSelect({
         elem: "#deptTree",
-        url: "/dept/tree",
+        url: "${ctx}/admin/dept/tree",
         dataStyle: "layuiStyle",
         selectInitVal: 1,
         width: "100%",
         method: "post",
-        menubar: true,
         dataFormat: "list",
         ficon: ["1", "-1"],
-        response: {
-            statusCode: 0,
-            message: "msg",
-            title: "name"
-        }, done: function (data, obj, first) {
+        done: function (data, obj, first) {
             if (first) {
                 dtree.dataInit("deptTree", $('#deptId').val());
                 dtree.selectVal("deptTree");
             }
-            $('input:radio[name=status][value="[[${user.status}]]"]').prop("checked", true);
-            form.render('radio');
         }
     });
-    
+
     form.on('submit(submit-form)', function (obj) {
+        if(depTree.getNowParam().nodeId== "0") {
+            layer.msg("请选择一个部门！", {icon: 5});
+            return false;
+        }
         $.ajax({
             type: "POST",
-            url: '/mgr/save',
+            url: '${ctx}/admin/user/save',
             data: obj.field,
             dataType: 'json',
             cache: false,

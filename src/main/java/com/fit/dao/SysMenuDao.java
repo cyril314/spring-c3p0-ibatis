@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * @AUTO
  * @Author Fit
- * @DATE 2023/12/10
+ * @DATE 2023/12/13
  */
 @Mapper
 public interface SysMenuDao extends BaseCrudDao<SysMenu> {

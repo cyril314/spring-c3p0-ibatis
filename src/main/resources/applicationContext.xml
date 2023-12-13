@@ -73,17 +73,18 @@
         <property name="contentNegotiationManager" ref="cnManager"/>
         <property name="viewResolvers">
             <list>
-                <!--VelocityViewResolver视图配置 -->
-                <bean class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
-                    <property name="prefix" value=""/>
-                    <property name="suffix" value=".vm"/>
-                    <property name="requestContextAttribute" value="rc"/>
-                    <property name="contentType" value="text/html;charset=UTF-8"/>
-                </bean>
                 <!-- 这个类用于JSP视图解析 -->
                 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
                     <property name="prefix" value="/views/"/>
                     <property name="suffix" value=".jsp"/>
+                </bean>
+                <!--VelocityViewResolver视图配置 -->
+                <bean class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+                    <property name="prefix" value="/velocity/"/>
+                    <property name="suffix" value=".vm"/>
+                    <property name="cache" value="true"/>
+                    <property name="requestContextAttribute" value="ctx"/>
+                    <property name="contentType" value="text/html;charset=UTF-8"/>
                 </bean>
             </list>
         </property>

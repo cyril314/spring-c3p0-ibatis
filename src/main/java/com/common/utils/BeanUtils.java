@@ -163,8 +163,11 @@ public abstract class BeanUtils extends org.springframework.beans.BeanUtils {
                         }
                         Method setter = pro.getWriteMethod();
                         if (setter != null) {
+                            System.out.println(String.format("Reflected key %s value %s", t, value.toString()));
                             if (t.equals("java.lang.Long")) {
                                 setter.invoke(bean, Long.valueOf(String.valueOf(value)));
+                            } else if (t.equals("java.lang.Integer")) {
+                                setter.invoke(bean, Integer.valueOf(String.valueOf(value)));
                             } else {
                                 setter.invoke(bean, value);
                             }

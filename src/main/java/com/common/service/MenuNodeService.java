@@ -26,13 +26,13 @@ public class MenuNodeService {
     /**
      * 获取用户权限集合
      */
-    public List<Long> getUserRoles(String userName) {
-        if (ObjectUtil.isEmpty(userName)) {
+    public List<Long> getUserRoles(Long uid) {
+        if (ObjectUtil.isEmpty(uid)) {
             return new ArrayList<Long>();
         } else {
             StringBuffer sb = new StringBuffer();
-            sb.append("SELECT u.`ROLE_ID` FROM `sys_user` u WHERE u.`USERNAME`=?");
-            return jdbcTemplate.queryForList(sb.toString(), new Object[]{userName}, Long.class);
+            sb.append("SELECT u.`ROLE_ID` FROM `sys_user` u WHERE u.`id`=?");
+            return jdbcTemplate.queryForList(sb.toString(), new Object[]{uid}, Long.class);
         }
     }
 

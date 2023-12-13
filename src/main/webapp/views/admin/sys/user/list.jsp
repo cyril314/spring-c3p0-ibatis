@@ -67,12 +67,11 @@
 </div>
 <script>
 layui.extend({
-    dtree: 'layui/extend/dtree/dtree',
     tablePlug: 'layui/extend/tablePlug',
-}).use(['table', 'dtree', 'form', 'tablePlug'], function (table,dtree,form,tablePlug) {
+}).use(['table', 'dtree', 'form', 'tablePlug'], function (table, dtree, form, tablePlug) {
     var DTree = dtree.render({
         elem: "#deptTree",
-        url: "${ctx}/admin/menu/tree",
+        url: "${ctx}/admin/dept/tree",
         width: "60%",
         method: "post",
         dataStyle: "layuiStyle",
@@ -94,9 +93,6 @@ layui.extend({
         elem: '#table-list',
         url: '${ctx}/admin/user/list',
         method: 'post',
-        where: {
-            deptId: 0
-        },
         dataType: 'JSON',
         page: true,
         toolbar: '#toolbar',
@@ -151,7 +147,7 @@ layui.extend({
         } else if (event === 'reset') {// 重置密码
             modifyReq('${ctx}/admin/user/reset', {userId: data.id}, false);
         } else if (event === 'info') {
-            editView("${ctx}/admin/user/detail?i=1&id=" + data.id, '查看用户');
+            editView("${ctx}/admin/user/detail?id=" + data.id, '查看用户');
         } else if (event === 'setRole') {
             editView("${ctx}/admin/user/setRole?id=" + data.id, '用户角色');
         }

@@ -14,7 +14,7 @@
         <form class="lay-user-login-box lay-user-login-body layui-form" action="${ctx}/login" method="post">
             <div class="layui-form-item">
                 <label class="lay-user-login-icon layui-icon layui-icon-username" for="lay-login-username"></label>
-                <input type="text" name="username" id="lay-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
+                <input type="text" name="account" id="lay-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
             </div>
             <div class="layui-form-item">
                 <label class="lay-user-login-icon layui-icon layui-icon-password" for="lay-login-password"></label>
