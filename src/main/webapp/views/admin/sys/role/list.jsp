@@ -31,6 +31,9 @@
         </button>
     </script>
     <table class="layui-hide" id="table-list"></table>
+    <script type="text/html" id="statusTpl">
+        <input type="checkbox" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{ d.enabled==true?"checked":"" }}>
+    </script>
     <script type="text/html" id="column-toolbar">
         <button type="button" class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">
             <i class="layui-icon layui-icon-edit" title="编辑角色">编辑</i>
@@ -41,9 +44,7 @@
     </script>
 </div>
 <script>
-layui.extend({
-    tablePlug: 'layui/extend/tablePlug',
-}).use(['table', 'form', 'tablePlug'], function (table,form,tablePlug) {
+layui.use(['table', 'form', 'tablePlug'], function (table, form, tablePlug) {
     tablePlug.smartReload.enable(true);
     table.render({
         elem: '#table-list',
@@ -58,16 +59,10 @@ layui.extend({
                 {type: 'checkbox'},
                 {field: 'name', title: '角色名称', minWidth: 80},
                 {field: 'notes', title: '备注', minWidth: 80},
+                {field: 'status', title: '状态', align: 'center', templet: "#statusTpl", width: 100},
                 {fixed: 'right', title: '操作', align: 'center', toolbar: '#column-toolbar'}
             ]
-        ], parseData: function (res) {
-            return {
-                "code": res.code,
-                "msg": res.msg,
-                "data": res.data,
-                "count": res.recordsTotal
-            };
-        }
+        ]
     });
     // 工具条点击事件
     table.on('toolbar', function (obj) {

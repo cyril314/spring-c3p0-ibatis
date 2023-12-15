@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <!DOCTYPE HTML>
 <html>
 <jsp:include page="../../../head.jsp">
@@ -23,10 +24,7 @@
     </div>
 </div>
 <script>
-layui.extend({
-    dtree: 'layui/extend/dtree/dtree'
-}).use(['form', 'layer', 'dtree'], function () {
-    var form = layui.form, layer = layui.layer, $ = layui.$, dtree = layui.dtree;
+layui.use(['form', 'dtree'], function (form, dtree) {
     dtree.on("node('roleTree')", function (obj) {
         let typeDom = layui.$('#roleId');
         if (typeDom.val() === obj.param.nodeId) {
@@ -41,19 +39,15 @@ layui.extend({
         elem: "#roleTree",
         url: "${ctx}/admin/role/tree",
         dataStyle: "layuiStyle",
-        selectInitVal: 1,
+        selectInitVal: 0,
         width: "100%",
         method: "post",
         menubar: true,
         dataFormat: "list",
         ficon: ["1", "-1"],
-        response: {
-            statusCode: 0,
-            message: "msg",
-            title: "name"
-        }, done: function (data, obj, first) {
+        done: function (data, obj, first) {
             if (first) {
-                dtree.dataInit("roleTree", $('#roleId').val());
+                dtree.dataInit("roleTree", layui.$('#roleId').val());
                 dtree.selectVal("roleTree");
             }
         }

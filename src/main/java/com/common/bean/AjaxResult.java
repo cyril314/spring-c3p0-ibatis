@@ -38,12 +38,9 @@ public class AjaxResult extends HashMap<String, Object> {
      * @param obj   返回数据
      */
     public static AjaxResult results(int code, String msg, Long count, Object obj) {
-        AjaxResult json = new AjaxResult();
-        json.put("code", code);
-        json.put("msg", msg);
+        AjaxResult json = tables(code, msg, count, obj);
         json.put("recordsTotal", count);
         json.put("recordsFiltered", count);
-        json.put("data", obj);
         return json;
     }
 
@@ -66,18 +63,15 @@ public class AjaxResult extends HashMap<String, Object> {
      * @param rows  返回数据
      */
     public static AjaxResult tables(int code, String msg, Long total, Object rows) {
-        AjaxResult json = new AjaxResult();
-        json.put("msg", msg);
-        json.put("code", code);
-        json.put("data", rows);
-        json.put("total", total);
+        AjaxResult json = tree(code, msg, rows);
+        json.put("count", total);
         return json;
     }
 
     public static AjaxResult tree(int code, String msg, Object rows) {
         AjaxResult json = new AjaxResult();
         json.put("message", msg);
-        json.put("statusCode", code);
+        json.put("code", code);
         json.put("data", rows);
         return json;
     }

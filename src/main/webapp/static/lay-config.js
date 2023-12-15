@@ -92,6 +92,8 @@ layui.config({
     tabRightMenu: 'layui/extend/tabRightMenu',
     yadmin: 'layui/extend/yadmin',
     dtree: 'layui/extend/dtree/dtree',
+    tablePlug: 'layui/extend/tablePlug',
+    tableTree: 'layui/extend/tableTree',
 }).use(["yadmin", "tabRightMenu"], function () {
     // 渲染 tab 右键菜单.
     layui.tabRightMenu.render({

@@ -4,8 +4,9 @@ import com.common.base.BaseController;
 import com.common.bean.AjaxResult;
 import com.common.utils.BeanUtils;
 import com.common.utils.ObjectUtil;
+import com.fit.bean.SysDept;
 import com.fit.bean.SysMenu;
-import com.fit.service.SysMenuService;
+import com.fit.service.SysDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,15 +23,15 @@ import java.util.Map;
  * @DATE 2020/8/13
  */
 @Controller
-@RequestMapping("/admin/menu")
-public class MenuController extends BaseController {
+@RequestMapping("/admin/dept")
+public class DeptController extends BaseController {
 
     @Autowired
-    private SysMenuService service;
+    private SysDeptService service;
 
     @GetMapping("/list")
-    public String menuList(Model model) {
-        return "admin/sys/menu/list";
+    public String resList(Model model) {
+        return "admin/sys/dept/list";
     }
 
     /**
@@ -38,20 +39,20 @@ public class MenuController extends BaseController {
      */
     @PostMapping("/list")
     @ResponseBody
-    public void menuList(HttpServletRequest request, HttpServletResponse response) {
+    public void resList(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> map = getRequestParamsMap(request);
-        List<SysMenu> list = service.findList(map);
+        List<SysDept> userList = service.findList(map);
         Long count = service.findCount(map);
-        writeToJson(response, AjaxResult.tables(count, list));
+        writeToJson(response, AjaxResult.tables(count, userList));
     }
 
     @GetMapping("/edit")
-    public String menuEdit(Long id, Model model) {
+    public String edit(Long id, Model model) {
         if (ObjectUtil.isNotEmpty(id)) {
-            SysMenu menu = service.get(id);
-            model.addAttribute("menu", menu);
+            SysDept bean = service.get(id);
+            model.addAttribute("dept", bean);
         }
-        return "admin/sys/menu/edit";
+        return "admin/sys/dept/edit";
     }
 
     @PostMapping("/save")
@@ -59,11 +60,11 @@ public class MenuController extends BaseController {
     public void save(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> map = getRequestParamsMap(request);
         try {
-            SysMenu menu = BeanUtils.map2Bean(SysMenu.class, map);
-            if (ObjectUtil.isNotEmpty(menu.getId())) {
-                service.update(menu);
+            SysDept bean = BeanUtils.map2Bean(SysDept.class, map);
+            if (ObjectUtil.isNotEmpty(bean.getId())) {
+                service.update(bean);
             } else {
-                service.save(menu);
+                service.save(bean);
             }
             writeToJson(response, AjaxResult.success("操作成功"));
         } catch (Exception e) {
@@ -77,14 +78,14 @@ public class MenuController extends BaseController {
     @RequestMapping("/setState")
     @ResponseBody
     public Object changeState(@RequestParam Long id) {
-        SysMenu menu = this.service.get(id);
-        if (menu != null) {
-            if (menu.getEnabled()) {
-                menu.setEnabled(false);
+        SysDept bean = this.service.get(id);
+        if (bean != null) {
+            if (bean.getEnabled()) {
+                bean.setEnabled(false);
             } else {
-                menu.setEnabled(true);
+                bean.setEnabled(true);
             }
-            this.service.update(menu);
+            this.service.update(bean);
             return AjaxResult.success("修改成功");
         }
         return AjaxResult.error("修改状态失败");

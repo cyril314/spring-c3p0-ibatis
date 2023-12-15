@@ -2,7 +2,8 @@
 SQLyog v10.2 
 MySQL - 5.7.9 : Database - test
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -23,7 +24,7 @@ CREATE TABLE `sys_dept` (
   `PIDS` varchar(512) DEFAULT NULL COMMENT '父级ids',
   `SIMPLE_NAME` varchar(45) DEFAULT NULL COMMENT '简称',
   `FULL_NAME` varchar(255) DEFAULT NULL COMMENT '全称',
-  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
+  `NOTES` varchar(255) DEFAULT NULL COMMENT '描述',
   `LEVEL` int(5) DEFAULT NULL COMMENT '层级',
   `VERSION` int(11) DEFAULT NULL COMMENT '版本（乐观锁保留字段）',
   `SORT` int(11) DEFAULT NULL COMMENT '排序',
@@ -38,7 +39,7 @@ CREATE TABLE `sys_dept` (
 
 LOCK TABLES `sys_dept` WRITE;
 
-insert  into `sys_dept`(`ID`,`PID`,`PIDS`,`SIMPLE_NAME`,`FULL_NAME`,`DESCRIPTION`,`LEVEL`,`VERSION`,`SORT`,`CREATE_USER`,`CREATE_TIME`,`UPDATE_USER`,`UPDATE_TIME`) values (1,0,'-1','总公司','总公司','',NULL,NULL,1,NULL,'2019-04-01 00:00:00',NULL,NULL),(2,1,'1','开发部','开发部','',NULL,NULL,2,NULL,'2019-04-01 00:00:00',NULL,NULL),(3,1,'1','运营部','运营部','',NULL,NULL,3,NULL,'2019-04-01 00:00:00',NULL,NULL),(4,1,'1','战略部','战略部','',NULL,NULL,4,NULL,'2019-04-01 00:00:00',NULL,NULL),(5,0,NULL,'财务部','财务部','财务部',NULL,NULL,5,1,'2019-05-05 13:03:21',NULL,NULL);
+insert  into `sys_dept`(`ID`,`PID`,`PIDS`,`SIMPLE_NAME`,`FULL_NAME`,`NOTES`,`LEVEL`,`VERSION`,`SORT`,`CREATE_USER`,`CREATE_TIME`,`UPDATE_USER`,`UPDATE_TIME`) values (1,0,'-1','总公司','总公司','',NULL,NULL,1,NULL,'2019-04-01 00:00:00',NULL,NULL),(2,1,'1','开发部','开发部','',NULL,NULL,2,NULL,'2019-04-01 00:00:00',NULL,NULL),(3,1,'1','运营部','运营部','',NULL,NULL,3,NULL,'2019-04-01 00:00:00',NULL,NULL),(4,1,'1','战略部','战略部','',NULL,NULL,4,NULL,'2019-04-01 00:00:00',NULL,NULL),(5,0,NULL,'财务部','财务部','财务部',NULL,NULL,5,1,'2019-05-05 13:03:21',NULL,NULL);
 
 UNLOCK TABLES;
 

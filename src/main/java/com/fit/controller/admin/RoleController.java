@@ -2,8 +2,6 @@ package com.fit.controller.admin;
 
 import com.common.base.BaseController;
 import com.common.bean.AjaxResult;
-import com.common.bean.ZTreeNode;
-import com.common.service.ZtreeNodeService;
 import com.common.utils.BeanUtils;
 import com.common.utils.ConverterUtils;
 import com.common.utils.DateUtils;
@@ -41,8 +39,6 @@ public class RoleController extends BaseController {
     private SysRoleService roleService;
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private ZtreeNodeService ztreeNodeService;
 
     @GetMapping("/list")
     public String roleList(Model model) {
@@ -110,17 +106,6 @@ public class RoleController extends BaseController {
         } else {
             return AjaxResult.error("参数异常");
         }
-    }
-
-    /**
-     * 获取角色的tree列表
-     */
-    @RequestMapping(value = "/tree")
-    @ResponseBody
-    public Object tree() {
-        List<ZTreeNode> tree = this.ztreeNodeService.roleZtree();
-        tree.add(ZTreeNode.createParent());
-        return AjaxResult.success(200, "获取角色成功", tree);
     }
 
     @GetMapping("/power")

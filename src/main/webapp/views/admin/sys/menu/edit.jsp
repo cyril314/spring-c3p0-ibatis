@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="sort" class="layui-form-label"><span class="yadmin-red">*</span>排序</label>
+            <label for="sort" class="layui-form-label">排序</label>
             <div class="layui-input-block">
                 <input type="number" id="sort" placeholder="请输入序号" name="sort" value="${menu.sort}" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
@@ -62,17 +62,16 @@
 </div>
 <script>
 layui.extend({
-    dtree: 'layui/extend/dtree/dtree',
     iconPicker: 'layui/extend/icon/iconPicker',
 }).use(['form', 'dtree', 'iconPicker', 'jquery'], function (form, dtree, iconPicker, $) {
 
     iconPicker.init("#icon");
     
     dtree.on("node('menuTree')", function (obj) {
-        let typeDom = layui.$('#pid');
+        let typeDom = $('#pid');
         if (typeDom.val() === obj.param.nodeId) {
             typeDom.val('');
-            layui.$("input[dtree-id='pid']").val('请选择');
+            $("input[dtree-id='pid']").val('请选择');
         } else {
             typeDom.val(obj.param.nodeId)
         }

@@ -133,7 +133,6 @@ public abstract class BeanUtils extends org.springframework.beans.BeanUtils {
         for (Map<String, Object> map : maps) {
             list.add(map2Bean(clazz, map));
         }
-
         return list;
     }
 
@@ -156,10 +155,8 @@ public abstract class BeanUtils extends org.springframework.beans.BeanUtils {
                     if (map.containsKey(key)) {
                         Object value = map.get(key);
                         String t = pro.getPropertyType().getName();
-                        if (!t.equals("java.lang.String")) {
-                            if (value == null || "".equals(value)) {
-                                continue;
-                            }
+                        if (!t.equals("java.lang.String") && (value == null || "".equals(value))) {
+                            continue;
                         }
                         Method setter = pro.getWriteMethod();
                         if (setter != null) {

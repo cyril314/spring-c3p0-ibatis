@@ -24,9 +24,8 @@ public class ZtreeNodeService {
      */
     public List<ZTreeNode> deptZtree() {
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT id, pid AS parentId,`FULL_NAME` AS title,`LEVEL`,");
-        sb.append("(CASE WHEN (PID = 0 OR PID IS NULL) THEN 'true' ELSE 'false' END ) AS OPEN ");
-        sb.append(" FROM sys_dept");
+        sb.append("SELECT `id`, `pid` AS parentId, `FULL_NAME` AS title,`LEVEL`,");
+        sb.append("(CASE WHEN (`pid` = 0 OR `pid` IS NULL) THEN 'true' ELSE 'false' END ) AS OPEN FROM sys_dept");
         return jdbcTemplate.query(sb.toString(), BeanPropertyRowMapper.newInstance(ZTreeNode.class));
     }
 
@@ -35,8 +34,8 @@ public class ZtreeNodeService {
      */
     public List<ZTreeNode> roleZtree() {
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT id,pid AS parentId,NAME AS title, (CASE WHEN (PID = 0 OR PID IS NULL) THEN 'true' ELSE 'false' END ) AS OPEN ");
-        sb.append(" FROM sys_role");
+        sb.append("SELECT `id`, `pid` AS parentId, `NAME` AS title,'1' AS `LEVEL`,");
+        sb.append("(CASE WHEN (`pid` = 0 OR `pid` IS NULL) THEN 'true' ELSE 'false' END ) AS OPEN FROM sys_role");
         return jdbcTemplate.query(sb.toString(), BeanPropertyRowMapper.newInstance(ZTreeNode.class));
     }
 
@@ -45,9 +44,8 @@ public class ZtreeNodeService {
      */
     public List<ZTreeNode> menuZtree() {
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT sm.`id`, IFNULL(ms.`id`,0) AS parentId, sm.`NAME`, sm.`LEVEL`,");
-        sb.append("(CASE WHEN (sm.`pid` = 0 OR sm.`pid` IS NULL) THEN 'true' ELSE 'false' END ) AS OPEN");
-        sb.append(" FROM `sys_menu` sm LEFT JOIN `sys_menu` ms ON sm.`pid` = ms.`id`");
+        sb.append("SELECT `id`, `pid` AS parentId, `NAME` AS title, `LEVEL`,");
+        sb.append("(CASE WHEN (`pid` = 0 OR `pid` IS NULL) THEN 'true' ELSE 'false' END ) AS OPEN FROM `sys_menu`");
         return jdbcTemplate.query(sb.toString(), BeanPropertyRowMapper.newInstance(ZTreeNode.class));
     }
 }

@@ -29,7 +29,7 @@ public class MenuNode implements Comparable, Serializable {
     private String name;
 
     /**
-     * 按钮级别
+     * 类型
      */
     private Integer mold;
     /**

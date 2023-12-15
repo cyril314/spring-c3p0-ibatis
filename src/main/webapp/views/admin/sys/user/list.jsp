@@ -66,9 +66,7 @@
     </div>
 </div>
 <script>
-layui.extend({
-    tablePlug: 'layui/extend/tablePlug',
-}).use(['table', 'dtree', 'form', 'tablePlug'], function (table, dtree, form, tablePlug) {
+layui.use(['table', 'dtree', 'form', 'tablePlug'], function (table, dtree, form, tablePlug) {
     var DTree = dtree.render({
         elem: "#deptTree",
         url: "${ctx}/admin/dept/tree",
@@ -115,7 +113,7 @@ layui.extend({
                 "code": res.code, //解析接口状态
                 "msg": res.msg, //解析提示文本
                 "data": res.data, //解析数据列表
-                "count": res.total
+                "count": res.count
             };
         }
     });

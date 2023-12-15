@@ -2,6 +2,9 @@ package com.common.bean;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * ztree 插件的节点
  */
@@ -49,6 +52,15 @@ public class ZTreeNode {
     private String iconSkin;
 
     /**
+     * dtree复选框集合
+     */
+    private List<CheckArr> checkArr = new ArrayList<CheckArr>();
+
+    public ZTreeNode() {
+        this.checkArr.add(new CheckArr());
+    }
+
+    /**
      * 创建ztree的父级节点
      */
     public static ZTreeNode createParent() {
@@ -68,4 +80,15 @@ public class ZTreeNode {
         zTreeNode.setLevel(0);
         return zTreeNode;
     }
+}
+
+/**
+ * @Author AIM
+ * @Des Dtree选择框必备
+ * @DATE 2022/5/23
+ */
+@Data
+class CheckArr {
+    private String type = "0";
+    private String checked = "0";
 }

@@ -137,10 +137,10 @@ public class UserController extends BaseController {
      * 设置角色页面
      */
     @RequestMapping("/setRole")
-    public String setRoleView(@RequestParam Long userId, Model model) {
-        SysUser sysUser = userService.get(userId);
+    public String setRoleView(@RequestParam Long id, Model model) {
+        SysUser sysUser = userService.get(id);
         model.addAttribute("roleId", sysUser.getRoleId());
-        model.addAttribute("userId", userId);
+        model.addAttribute("userId", id);
         return "admin/sys/user/setRole";
     }
 }

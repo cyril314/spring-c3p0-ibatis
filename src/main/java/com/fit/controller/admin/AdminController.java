@@ -30,7 +30,7 @@ import java.util.List;
  * @DATE 2020/7/27
  */
 @Controller
-public class IndexAdminController extends BaseController {
+public class AdminController extends BaseController {
 
     @Value("${server.port}")
     private String port;
@@ -43,14 +43,36 @@ public class IndexAdminController extends BaseController {
     private ZtreeNodeService ztreeNodeService;
 
     /**
-     * 获取部门树列表
+     * 获取部门树
      */
     @RequestMapping(value = "/admin/dept/tree")
     @ResponseBody
     public Object treeDept() {
         List<ZTreeNode> tree = this.ztreeNodeService.deptZtree();
         tree.add(ZTreeNode.createParent());
-        return AjaxResult.success(200, "获取部门成功", tree);
+        return AjaxResult.tree(200, "获取部门成功", tree);
+    }
+
+    /**
+     * 获取角色树
+     */
+    @RequestMapping(value = "/admin/role/tree")
+    @ResponseBody
+    public Object treeRole() {
+        List<ZTreeNode> tree = this.ztreeNodeService.roleZtree();
+        tree.add(ZTreeNode.createParent());
+        return AjaxResult.tree(200, "获取角色成功", tree);
+    }
+
+    /**
+     * 获取菜单树
+     */
+    @RequestMapping(value = "/admin/menu/tree")
+    @ResponseBody
+    public Object treeMenu() {
+        List<ZTreeNode> tree = this.ztreeNodeService.menuZtree();
+        tree.add(ZTreeNode.createParent());
+        return AjaxResult.tree(200, "获取菜单成功", tree);
     }
 
     @RequestMapping(value = {"", "/", "/index", "/index.jsp"})

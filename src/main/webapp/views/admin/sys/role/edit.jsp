@@ -10,15 +10,13 @@
 <div class="yadmin-body animated fadeIn">
     <div class="layui-form layui-form-pane">
         <input type="hidden" name="id" value="${role.id}" />
-        <c:if test="${role.pid==0}">
         <div class="layui-form-item">
-            <label for="roleTree" class="layui-form-label"><span class="yadmin-red">*</span>上级名称</label>
+            <label for="roleTree" class="layui-form-label">上级名称</label>
             <div class="layui-input-block">
                 <ul id="roleTree" class="dtree" data-id="0" data-value="选择上级名称"></ul>
                 <input type="hidden" id="pid" name="pid" value="${role.pid}">
             </div>
         </div>
-        </c:if>
         <div class="layui-form-item">
             <label for="name" class="layui-form-label"><span class="yadmin-red">*</span>角色名称</label>
             <div class="layui-input-block">
@@ -34,8 +32,8 @@
         <div class="layui-form-item" pane="">
             <label class="layui-form-label">状态</label>
             <div class="layui-input-block">
-                <input type="radio" id="ENABLED" name="1" value="ENABLE" title="正常" />
-                <input type="radio" name="ENABLED" value="0" title="冻结" checked />
+                <input type="radio" name="enabled" value="1" title="正常" <c:if test="${role.enabled}">checked</c:if> >
+                <input type="radio" name="enabled" value="0" title="冻结" <c:if test="${not role.enabled}">checked</c:if> >
             </div>
         </div>
         <div class="layui-form-item">
@@ -46,40 +44,35 @@
     </div>
 </div>
 <script>
-layui.extend({
-    dtree: 'layui/extend/dtree/dtree'
-}).use(['form', 'dtree'], function (form, dtree) {
-    if ("${role.pid}" != "0") {
-        dtree.on("node('roleTree')", function (obj) {
-            let typeDom = layui.$('#pid');
-            if (typeDom.val() === obj.param.nodeId) {
-                typeDom.val('');
-                layui.$("input[dtree-id='roleTree']").val('请选择');
-            } else {
-                typeDom.val(obj.param.nodeId)
+layui.use(['form', 'dtree'], function (form, dtree) {
+    dtree.on("node('roleTree')", function (obj) {
+        let typeDom = layui.$('#pid');
+        if (typeDom.val() === obj.param.nodeId) {
+            typeDom.val('');
+            layui.$("input[dtree-id='roleTree']").val('请选择');
+        } else {
+            typeDom.val(obj.param.nodeId)
+        }
+    });
+
+    dtree.renderSelect({
+        elem: "#roleTree",
+        url: "${ctx}/admin/role/tree",
+        dataStyle: "layuiStyle",
+        selectInitVal: 1,
+        width: "100%",
+        method: "post",
+        menubar: true,
+        dataFormat: "list",
+        ficon: ["1", "-1"],
+        done: function (data, obj, first) {
+            if (first) {
+                dtree.dataInit("roleTree", layui.$('#pid').val());
+                dtree.selectVal("roleTree");
             }
-        });
-        
-        dtree.renderSelect({
-            elem: "#roleTree",
-            url: "${ctx}/admin/role/tree",
-            dataStyle: "layuiStyle",
-            selectInitVal: 1,
-            width: "100%",
-            method: "post",
-            menubar: true,
-            dataFormat: "list",
-            ficon: ["1", "-1"],
-            done: function (data, obj, first) {
-                if (first) {
-                    dtree.dataInit("roleTree", layui.$('#pid').val());
-                    dtree.selectVal("roleTree");
-                }
-                layui.$('input:radio[name=status][value="${role.enabled}"]').prop("checked", true);
-            }
-        });
-    }
-    
+        }
+    });
+
     form.on('submit(submit-form)', function (obj) {
         $.ajax({
             type: "POST",

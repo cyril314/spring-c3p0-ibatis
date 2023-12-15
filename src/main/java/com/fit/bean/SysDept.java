@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 /**
  * @AUTO
  * @Author Fit
- * @DATE 2023/12/13
+ * @DATE 2023/12/15
  */
 @Data
 @Builder
@@ -32,7 +32,7 @@ public class SysDept extends BaseEntity<SysDept> {
     private String fullName;
 
     /** 描述 (无默认值) */
-    private String description;
+    private String notes;
 
     /** 层级 (无默认值) */
     private Integer level;
