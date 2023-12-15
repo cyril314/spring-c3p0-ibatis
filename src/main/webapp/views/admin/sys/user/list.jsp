@@ -26,6 +26,7 @@
                             <div class="layui-inline">
                                 <label for="keywords" class="layui-form-label">关键字</label>
                                 <div class="layui-input-inline">
+                                    <input type="hidden" name="deptId" value=""/>
                                     <input type="text" name="keywords" autocomplete="off" placeholder="输入名称、邮箱" id="keywords" class="layui-input" />
                                 </div>
                                 <button lay-submit="" lay-filter="search" class="layui-btn layui-btn-sm layui-btn-primary table-action">

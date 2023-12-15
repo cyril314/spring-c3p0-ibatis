@@ -3,10 +3,8 @@ package com.fit.controller.admin;
 import com.common.base.BaseController;
 import com.common.bean.AjaxResult;
 import com.common.utils.BeanUtils;
-import com.common.utils.ConverterUtils;
 import com.common.utils.MD5Util;
 import com.common.utils.ObjectUtil;
-import com.fit.bean.SysDept;
 import com.fit.bean.SysUser;
 import com.fit.service.SysDeptService;
 import com.fit.service.SysUserService;
@@ -46,6 +44,15 @@ public class UserController extends BaseController {
     @ResponseBody
     public void userList(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> map = getRequestParamsMap(request);
+        Object keywords = map.get("keywords");
+        if (ObjectUtil.isNotEmpty(keywords)) {
+            map.remove("keywords");
+            if (keywords.toString().contains("@")) {
+                map.put("email", keywords);
+            } else {
+                map.put("name", keywords);
+            }
+        }
         List<SysUser> userList = userService.findList(map);
         Long count = userService.findCount(map);
         writeToJson(response, AjaxResult.tables(count, userList));
