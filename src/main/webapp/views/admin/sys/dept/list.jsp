@@ -91,7 +91,7 @@ layui.use(['table', 'dtree', 'form', 'tablePlug'], function (table, dtree, form,
                 if (selectData.length > 0) {
                     let idsArray = [];
                     for (let i = 0; i < selectData.length; i++) {
-                        idsArray.push(selectData[i].deptId);
+                        idsArray.push(selectData[i].id);
                     }
                     let ids = idsArray.toString();
                     changeReq(ids, '${ctx}/admin/dept/del')
@@ -104,7 +104,7 @@ layui.use(['table', 'dtree', 'form', 'tablePlug'], function (table, dtree, form,
     table.on('tool', function (obj) {
         let data = obj.data, event = obj.event;
         if (event === 'edit') {
-            editView("${ctx}/admin/dept/edit?id=" + data.deptId, "编辑部门");
+            editView("${ctx}/admin/dept/edit?id=" + data.id, "编辑部门");
         }
     });
     dtree.render({

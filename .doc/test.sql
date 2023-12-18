@@ -2,8 +2,7 @@
 SQLyog v10.2 
 MySQL - 5.7.9 : Database - test
 *********************************************************************
-*/
-
+*/
 
 /*!40101 SET NAMES utf8 */;
 
@@ -39,7 +38,7 @@ CREATE TABLE `sys_dept` (
 
 LOCK TABLES `sys_dept` WRITE;
 
-insert  into `sys_dept`(`ID`,`PID`,`PIDS`,`SIMPLE_NAME`,`FULL_NAME`,`NOTES`,`LEVEL`,`VERSION`,`SORT`,`CREATE_USER`,`CREATE_TIME`,`UPDATE_USER`,`UPDATE_TIME`) values (1,0,'-1','总公司','总公司','',NULL,NULL,1,NULL,'2019-04-01 00:00:00',NULL,NULL),(2,1,'1','开发部','开发部','',NULL,NULL,2,NULL,'2019-04-01 00:00:00',NULL,NULL),(3,1,'1','运营部','运营部','',NULL,NULL,3,NULL,'2019-04-01 00:00:00',NULL,NULL),(4,1,'1','战略部','战略部','',NULL,NULL,4,NULL,'2019-04-01 00:00:00',NULL,NULL),(5,0,NULL,'财务部','财务部','财务部',NULL,NULL,5,1,'2019-05-05 13:03:21',NULL,NULL);
+insert  into `sys_dept`(`ID`,`PID`,`PIDS`,`SIMPLE_NAME`,`FULL_NAME`,`NOTES`,`LEVEL`,`VERSION`,`SORT`,`CREATE_USER`,`CREATE_TIME`,`UPDATE_USER`,`UPDATE_TIME`) values (1,0,'-1','总公司','总公司','',0,NULL,1,NULL,'2019-04-01 00:00:00',NULL,NULL),(2,1,'1','开发部','开发部','',1,NULL,2,NULL,'2019-04-01 00:00:00',NULL,NULL),(3,1,'1','运营部','运营部','',1,NULL,3,NULL,'2019-04-01 00:00:00',NULL,NULL),(4,1,'1','战略部','战略部','',1,NULL,4,NULL,'2019-04-01 00:00:00',NULL,NULL),(5,0,NULL,'财务部','财务部','财务部',1,NULL,5,1,'2019-04-01 00:00:00',NULL,NULL);
 
 UNLOCK TABLES;
 
@@ -64,13 +63,13 @@ CREATE TABLE `sys_menu` (
   `UPDATE_USER` bigint(20) DEFAULT NULL COMMENT '修改人',
   `UPDATE_TIME` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
 /*Data for the table `sys_menu` */
 
 LOCK TABLES `sys_menu` WRITE;
 
-insert  into `sys_menu`(`ID`,`PID`,`NAME`,`ICON`,`MOLD`,`URL`,`SORT`,`NOTES`,`LEVEL`,`ENABLED`,`ISYS`,`CREATE_USER`,`CREATE_TIME`,`UPDATE_USER`,`UPDATE_TIME`) values (1,0,'后台管理',NULL,0,'#',1,'用户登陆后台跳转页',1,1,0,NULL,NULL,NULL,NULL),(2,1,'系统管理','glyphicon glyphicon-cog',0,'#',1,'系统管理',2,1,0,NULL,NULL,NULL,NULL),(3,2,'用户列表',NULL,1,'/admin/user/list',1,'用户管理列表页',3,1,0,NULL,NULL,NULL,NULL),(4,3,'用户保存',NULL,2,'/admin/user/save',1,'用户管理保存更新',4,1,0,NULL,NULL,NULL,NULL),(5,2,'角色列表',NULL,1,'/admin/role/list',2,'角色管理的列表',3,1,0,NULL,NULL,NULL,NULL),(6,5,'角色保存',NULL,2,'/admin/role/save',1,'角色保存与更新',4,1,0,NULL,NULL,NULL,NULL),(7,2,'资源列表',NULL,1,'/admin/menu/list',3,'资源管理列表',3,1,0,NULL,NULL,NULL,NULL),(8,7,'资源保存',NULL,2,'/admin/menu/save',1,'资源管理的保存',4,1,0,NULL,NULL,NULL,NULL);
+insert  into `sys_menu`(`ID`,`PID`,`NAME`,`ICON`,`MOLD`,`URL`,`SORT`,`NOTES`,`LEVEL`,`ENABLED`,`ISYS`,`CREATE_USER`,`CREATE_TIME`,`UPDATE_USER`,`UPDATE_TIME`) values (1,0,'后台管理',NULL,1,'#',1,'用户登陆后台跳转页',1,1,0,NULL,NULL,NULL,NULL),(2,1,'系统管理',NULL,1,'#',1,'系统管理',2,1,0,NULL,NULL,NULL,NULL),(3,2,'用户列表',NULL,1,'/admin/user/list',1,'用户管理列表页',3,1,0,NULL,NULL,NULL,NULL),(4,3,'用户保存',NULL,2,'/admin/user/save',1,'用户管理保存与更新',4,1,0,NULL,NULL,NULL,NULL),(5,2,'角色列表',NULL,1,'/admin/role/list',2,'角色管理的列表',3,1,0,NULL,NULL,NULL,NULL),(6,5,'角色保存',NULL,2,'/admin/role/save',1,'角色管理保存与更新',4,1,0,NULL,NULL,NULL,NULL),(7,2,'资源列表',NULL,1,'/admin/menu/list',3,'资源管理列表',3,1,0,NULL,NULL,NULL,NULL),(8,7,'资源保存',NULL,2,'/admin/menu/save',1,'资源管理保存与更新',4,1,0,NULL,NULL,NULL,NULL),(9,2,'部门列表',NULL,1,'/admin/dept/list',4,'部门管理列表',3,1,0,NULL,NULL,NULL,NULL),(10,9,'部门保存',NULL,2,'/admin/dept/save',1,'部门管理保存与更新',4,1,0,NULL,NULL,NULL,NULL);
 
 UNLOCK TABLES;
 
@@ -113,13 +112,13 @@ CREATE TABLE `sys_role_menu` (
   KEY `MENU_ID` (`MENU_ID`),
   CONSTRAINT `sys_role_menu_ibfk_1` FOREIGN KEY (`ROLE_ID`) REFERENCES `sys_role` (`ID`),
   CONSTRAINT `sys_role_menu_ibfk_2` FOREIGN KEY (`MENU_ID`) REFERENCES `sys_menu` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='角色权限关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='角色权限关联表';
 
 /*Data for the table `sys_role_menu` */
 
 LOCK TABLES `sys_role_menu` WRITE;
 
-insert  into `sys_role_menu`(`ID`,`ROLE_ID`,`MENU_ID`) values (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,1,7),(8,1,8);
+insert  into `sys_role_menu`(`ID`,`ROLE_ID`,`MENU_ID`) values (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,1,7),(8,1,8),(9,1,9),(10,1,10);
 
 UNLOCK TABLES;
 
@@ -152,7 +151,7 @@ CREATE TABLE `sys_user` (
 
 LOCK TABLES `sys_user` WRITE;
 
-insert  into `sys_user`(`ID`,`ROLE_ID`,`DEPT_ID`,`NAME`,`ACCOUNT`,`PASSWORD`,`BIRTHDAY`,`EMAIL`,`SEX`,`PHONE`,`NOTES`,`ENABLED`,`ISYS`,`CREATE_USER`,`CREATE_TIME`,`UPDATE_USER`,`UPDATE_TIME`) values (1,1,1,'超级管理员','admin','21232f297a57a5a743894a0e4a801fc3',NULL,NULL,0,NULL,'超级管理员',1,1,NULL,'2017-11-11 00:00:00',NULL,NULL),(2,NULL,0,'测试用户','user','21232f297a57a5a743894a0e4a801fc3',NULL,NULL,0,NULL,'测试用户',1,0,NULL,'2017-11-11 00:00:00',NULL,NULL),(3,NULL,0,'3333','111',NULL,NULL,NULL,0,NULL,'1123333',0,0,NULL,'2018-03-31 18:43:40',NULL,NULL),(4,NULL,0,'444','444',NULL,NULL,NULL,0,NULL,'44111',0,0,NULL,'2018-03-31 18:52:39',NULL,NULL),(5,NULL,0,'11','11',NULL,NULL,NULL,0,NULL,'11',0,0,NULL,'2018-03-31 22:34:25',NULL,NULL),(6,NULL,0,'222','22',NULL,NULL,NULL,0,NULL,'22',0,0,NULL,'2018-03-31 22:34:36',NULL,NULL),(7,NULL,0,'666','666',NULL,NULL,NULL,0,NULL,'666',0,0,NULL,'2018-03-31 22:35:19',NULL,NULL),(8,NULL,0,'555','555',NULL,NULL,NULL,0,NULL,'555',0,0,NULL,'2018-03-31 22:35:37',NULL,NULL),(9,NULL,0,'777','777',NULL,NULL,NULL,0,NULL,'777',1,0,NULL,'2018-03-31 22:35:48',NULL,NULL),(10,NULL,0,'888','888',NULL,NULL,NULL,0,NULL,'888',0,0,NULL,'2018-03-31 22:36:05',NULL,NULL),(11,NULL,0,'999','999',NULL,NULL,NULL,0,NULL,'999',0,0,NULL,'2018-03-31 22:36:13',NULL,NULL),(12,NULL,0,'0022','000',NULL,'','000@admin.com',1,'13411111111','000<br>',1,0,NULL,'2018-04-02 10:12:31',NULL,NULL);
+insert  into `sys_user`(`ID`,`ROLE_ID`,`DEPT_ID`,`NAME`,`ACCOUNT`,`PASSWORD`,`BIRTHDAY`,`EMAIL`,`SEX`,`PHONE`,`NOTES`,`ENABLED`,`ISYS`,`CREATE_USER`,`CREATE_TIME`,`UPDATE_USER`,`UPDATE_TIME`) values (1,1,1,'超级管理员','admin','21232f297a57a5a743894a0e4a801fc3',NULL,NULL,0,NULL,'超级管理员',1,1,NULL,'2017-11-11 00:00:00',NULL,NULL),(2,NULL,0,'测试用户','user','21232f297a57a5a743894a0e4a801fc3',NULL,NULL,0,NULL,'测试用户',1,0,NULL,'2017-11-11 00:00:00',NULL,NULL),(3,NULL,0,'3333','111',NULL,NULL,NULL,0,NULL,'1123333',0,0,NULL,'2018-03-31 18:43:40',NULL,NULL),(4,NULL,0,'444','444',NULL,NULL,NULL,0,NULL,'44111',0,0,NULL,'2018-03-31 18:52:39',NULL,NULL),(5,NULL,0,'11','11',NULL,NULL,NULL,0,NULL,'11',0,0,NULL,'2018-03-31 22:34:25',NULL,NULL),(6,NULL,0,'222','22',NULL,NULL,NULL,0,NULL,'22',0,0,NULL,'2018-03-31 22:34:36',NULL,NULL),(7,NULL,0,'666','666',NULL,NULL,NULL,0,NULL,'666',0,0,NULL,'2018-03-31 22:35:19',NULL,NULL),(8,NULL,0,'555','555',NULL,NULL,NULL,0,NULL,'555',0,0,NULL,'2018-03-31 22:35:37',NULL,NULL),(9,NULL,0,'777','777',NULL,NULL,NULL,0,NULL,'777',1,0,NULL,'2018-03-31 22:35:48',NULL,NULL),(10,NULL,0,'888','888',NULL,NULL,NULL,0,NULL,'888',0,0,NULL,'2018-03-31 22:36:05',NULL,NULL),(11,NULL,0,'999','999',NULL,NULL,NULL,0,NULL,'999',0,0,NULL,'2018-03-31 22:36:13',NULL,NULL),(12,NULL,0,'0022','000','96e79218965eb72c92a549dd5a330112','','000@admin.com',1,'13411111111','000<br>',1,0,NULL,'2018-04-02 10:12:31',NULL,NULL);
 
 UNLOCK TABLES;
 

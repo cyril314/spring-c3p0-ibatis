@@ -31,6 +31,10 @@ layui.use(['tableTree', 'form'], function (tableTree, form) {
         url: '${ctx}/admin/menu/list',
         height: 'full-150',
         method: 'post',
+        tree: {
+            iconIndex: 2,
+            isPidData: true,
+        },
         toolbar: '#toolbar',
         cols: [
             [
@@ -61,7 +65,7 @@ layui.use(['tableTree', 'form'], function (tableTree, form) {
 
     tableTree.on('toolbar', function (obj) {
         if (obj.event === 'add') {
-            editView("${ctx}/menu/edit", "添加菜单");
+            editView("${ctx}/admin/menu/edit", "添加菜单");
         } else if (obj.event === 'del') {
             layer.confirm('真的删除行么?', function (index) {
                 let selectData = table.checkStatus('menu');
@@ -71,7 +75,7 @@ layui.use(['tableTree', 'form'], function (tableTree, form) {
                         idsArray.push(selectData[i].id);
                     }
                     let ids = idsArray.toString();
-                    changeReq(ids, '${ctx}/menu/del')
+                    changeReq(ids, '${ctx}/admin/menu/del')
                     layer.close(index);
                 }
             });
@@ -85,7 +89,7 @@ layui.use(['tableTree', 'form'], function (tableTree, form) {
     tableTree.on('tool', function (obj) {
         let data = obj.data, event = obj.event;
         if (event === 'edit') {
-            editView("${ctx}/menu/edit?id=" + data.id, "编辑菜单");
+            editView("${ctx}/admin/menu/edit?id=" + data.id, "编辑菜单");
         }
     });
 });

@@ -1,5 +1,6 @@
 package com.common.utils;
 
+import com.common.bean.MenuNode;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
 import org.springframework.util.Assert;
@@ -11,6 +12,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -177,5 +179,31 @@ public abstract class BeanUtils extends org.springframework.beans.BeanUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static <T> MenuNode buildTree(List<T> data, Class<T> clazz) {
+        Map<Long, MenuNode> nodeMap = new HashMap<>();
+        // 创建节点并添加到节点映射中
+        for (T node : data) {
+            MenuNode menu = new MenuNode();
+            copyProperties(node, menu);
+            nodeMap.put(menu.getId(), menu);
+        }
+        // 构建树结构
+        MenuNode root = null;
+        for (MenuNode node : nodeMap.values()) {
+            if (node.getPid() == 0) {
+                root = node;
+            } else {
+                MenuNode parentNode = nodeMap.get(node.getPid());
+                if (parentNode != null) {
+                    parentNode.getChildren().add(node);
+                    if (!parentNode.isOpen() && parentNode.getLevel() < 2) {
+                        parentNode.setOpen(true);
+                    }
+                }
+            }
+        }
+        return root;
     }
 }

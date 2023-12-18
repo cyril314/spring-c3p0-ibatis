@@ -2,6 +2,7 @@ package com.fit.controller.admin;
 
 import com.common.base.BaseController;
 import com.common.bean.AjaxResult;
+import com.common.bean.MenuNode;
 import com.common.utils.BeanUtils;
 import com.common.utils.ObjectUtil;
 import com.fit.bean.SysMenu;
@@ -42,6 +43,7 @@ public class MenuController extends BaseController {
         Map<String, Object> map = getRequestParamsMap(request);
         List<SysMenu> list = service.findList(map);
         Long count = service.findCount(map);
+//        MenuNode tree = BeanUtils.buildTree(list, SysMenu.class);
         writeToJson(response, AjaxResult.tables(count, list));
     }
 
@@ -65,7 +67,7 @@ public class MenuController extends BaseController {
             } else {
                 service.save(menu);
             }
-            writeToJson(response, AjaxResult.success("操作成功"));
+            writeToJson(response, AjaxResult.success());
         } catch (Exception e) {
             writeToJson(response, AjaxResult.error("操作失败"));
         }
@@ -85,7 +87,7 @@ public class MenuController extends BaseController {
                 menu.setEnabled(true);
             }
             this.service.update(menu);
-            return AjaxResult.success("修改成功");
+            return AjaxResult.success();
         }
         return AjaxResult.error("修改状态失败");
     }

@@ -94,6 +94,10 @@ layui.use(['table', 'form', 'tablePlug'], function (table, form, tablePlug) {
         }
     });
 
+    form.on('switch(status)', function (obj) {
+        modifyReq('${ctx}/admin/role/setState', {id: obj.value}, false);
+    });
+
     form.on('submit(search)', function (form) {
         table.reload('table-list', {
             where: form.field

@@ -13,8 +13,17 @@ public class AjaxResult extends HashMap<String, Object> {
 
     /**
      * 初始化一个新创建的 Message 对象
+     *
+     * @param code 信息码
+     * @param msg  内容
+     * @param obj  返回数据
      */
-    public AjaxResult() {
+    public static AjaxResult getInstance(int code, String msg, Object obj) {
+        AjaxResult json = new AjaxResult();
+        json.put("message", msg);
+        json.put("code", code);
+        json.put("data", obj);
+        return json;
     }
 
     /**
@@ -63,17 +72,11 @@ public class AjaxResult extends HashMap<String, Object> {
      * @param rows  返回数据
      */
     public static AjaxResult tables(int code, String msg, Long total, Object rows) {
-        AjaxResult json = tree(code, msg, rows);
-        json.put("count", total);
-        return json;
+        return tree(code, msg, rows).put("count", total);
     }
 
     public static AjaxResult tree(int code, String msg, Object rows) {
-        AjaxResult json = new AjaxResult();
-        json.put("message", msg);
-        json.put("code", code);
-        json.put("data", rows);
-        return json;
+        return getInstance(code, msg, rows);
     }
 
     /**
@@ -99,14 +102,14 @@ public class AjaxResult extends HashMap<String, Object> {
      * @param msg  内容
      */
     public static AjaxResult error(int code, String msg) {
-        return results(code, msg, 0L, null);
+        return getInstance(code, msg, null);
     }
 
     /**
      * 返回成功消息
      */
     public static AjaxResult success() {
-        return success(0, "操作成功");
+        return success(null);
     }
 
     /**
@@ -115,7 +118,7 @@ public class AjaxResult extends HashMap<String, Object> {
      * @param obj 返回数据
      */
     public static AjaxResult success(Object obj) {
-        return success(0, "请求成功", obj);
+        return success("操作成功", obj);
     }
 
     /**
@@ -125,27 +128,6 @@ public class AjaxResult extends HashMap<String, Object> {
      * @param obj 返回数据
      */
     public static AjaxResult success(String msg, Object obj) {
-        return success(0, msg, obj);
-    }
-
-    /**
-     * 返回成功消息
-     *
-     * @param code 信息码
-     * @param msg  内容
-     */
-    public static AjaxResult success(int code, String msg) {
-        return success(code, msg, null);
-    }
-
-    /**
-     * 返回成功消息
-     *
-     * @param code 信息码
-     * @param msg  内容
-     * @param obj  返回数据
-     */
-    public static AjaxResult success(int code, String msg, Object obj) {
-        return results(code, msg, 0L, obj);
+        return getInstance(0, msg, obj);
     }
 }

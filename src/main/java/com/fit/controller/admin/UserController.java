@@ -78,7 +78,7 @@ public class UserController extends BaseController {
             } else {
                 userService.save(sysUser);
             }
-            writeToJson(response, AjaxResult.success("操作成功"));
+            writeToJson(response, AjaxResult.success());
         } catch (Exception e) {
             writeToJson(response, AjaxResult.error("操作失败"));
         }
@@ -91,7 +91,7 @@ public class UserController extends BaseController {
         SysUser sysUser = BeanUtils.map2Bean(SysUser.class, map);
         Long delete = userService.delete(sysUser.getId());
         if (delete > 0) {
-            writeToJson(response, AjaxResult.success("删除成功"));
+            writeToJson(response, AjaxResult.success("删除成功", null));
         } else {
             writeToJson(response, AjaxResult.error("删除失败"));
         }
@@ -123,7 +123,7 @@ public class UserController extends BaseController {
                 sysUser.setEnabled(true);
             }
             this.userService.update(sysUser);
-            return AjaxResult.success("修改成功");
+            return AjaxResult.success();
         }
         return AjaxResult.error("修改状态失败");
     }

@@ -40,13 +40,13 @@ function openView(url, title, widthParam, heightParam, isFull) {
 
 function advices(data, tier) {
     if (data.code == 0) {
-        layer.msg(data.msg, {icon: 6}, function () {
+        layer.msg(data.message, {icon: 6}, function () {
             let index = tier.layer.getFrameIndex(window.name);
             tier.location.replace(tier.location.href)
             tier.layer.close(index);
         });
     } else {
-        layer.msg(data.msg, {icon: 5});
+        layer.msg(data.message, {icon: 5});
     }
 }
 
@@ -72,12 +72,12 @@ function modifyReq(url, dataParam, isReload) {
         data: dataParam,
         success: function (data) {
             if (data.code == 0) {
-                layer.msg(data.msg, {icon: 6, time: 1000});
+                layer.msg(data.message, {icon: 6, time: 1000});
                 if (isReload) {
                     window.location.reload(true);//刷新当前页
                 }
             } else {
-                layer.msg(data.msg, {icon: 5});
+                layer.msg(data.message, {icon: 5});
             }
         },
         error: function (event) {

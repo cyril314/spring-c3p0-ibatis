@@ -55,7 +55,9 @@ public class MenuNode implements Comparable, Serializable {
     /**
      * 子节点的集合
      */
-    private List<MenuNode> children;
+    private List<MenuNode> children = new ArrayList<>();
+
+    private boolean open = false;
 
     /**
      * 查询子节点时候的临时集合

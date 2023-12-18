@@ -66,7 +66,7 @@ public class DeptController extends BaseController {
             } else {
                 service.save(bean);
             }
-            writeToJson(response, AjaxResult.success("操作成功"));
+            writeToJson(response, AjaxResult.success());
         } catch (Exception e) {
             writeToJson(response, AjaxResult.error("操作失败"));
         }
@@ -86,7 +86,7 @@ public class DeptController extends BaseController {
                 bean.setEnabled(true);
             }
             this.service.update(bean);
-            return AjaxResult.success("修改成功");
+            return AjaxResult.success();
         }
         return AjaxResult.error("修改状态失败");
     }

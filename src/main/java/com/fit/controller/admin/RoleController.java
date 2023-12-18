@@ -13,10 +13,7 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,7 +75,7 @@ public class RoleController extends BaseController {
             } else {
                 roleService.save(role);
             }
-            writeToJson(response, AjaxResult.success("操作成功"));
+            writeToJson(response, AjaxResult.success());
         } catch (Exception e) {
             writeToJson(response, AjaxResult.error("操作失败"));
         }
@@ -106,6 +103,25 @@ public class RoleController extends BaseController {
         } else {
             return AjaxResult.error("参数异常");
         }
+    }
+
+    /**
+     * 修改状态
+     */
+    @RequestMapping("/setState")
+    @ResponseBody
+    public Object changeState(@RequestParam Long userId) {
+        SysRole role = this.roleService.get(userId);
+        if (role != null) {
+            if (role.getEnabled()) {
+                role.setEnabled(false);
+            } else {
+                role.setEnabled(true);
+            }
+            this.roleService.update(role);
+            return AjaxResult.success();
+        }
+        return AjaxResult.error("修改状态失败");
     }
 
     @GetMapping("/power")
